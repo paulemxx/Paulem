@@ -1,0 +1,152 @@
+<?php
+
+session_start();
+$bdd = new PDO("mysql:host=localhost;dbname=appweb",'root','');
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Gestion des erreurs.
+
+if(isset($_POST['forminscription'])) {
+
+    echo "ok";
+   
+   $date_op = htmlspecialchars($_POST['date_op']);
+   $montant_op = htmlspecialchars($_POST['montant_op']);
+   $typeversement = htmlspecialchars($_POST['typeversement']);
+   $visa = htmlspecialchars($_POST['visa']);
+   $matricule = htmlspecialchars($_SESSION['matricule']);
+
+
+  $scolarite
+    echo empty($montant_op);
+      
+   if(!empty($_POST['matricule']) AND !empty($_POST['date_op']) AND !empty($_POST['montant_op']) AND !empty($_POST['typeversement']) AND !empty($_POST['visa'])) {
+       echo "debut";
+
+
+       $rap=$rap-$montant_op;
+       $insertmbr = $bdd->prepare("INSERT INTO operations(matricule,date_op,montant_op,typeversement,visa,rap) VALUES(?,now(),?,?,?,?)");
+       $insertmbr->execute(array($matricule,$montant_op,$typeversement,$visa,$rap));
+       echo "fin";
+   }
+
+
+   
+   
+    }
+    ?>
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+  <html lang="fr">
+
+  <head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<title>Forum</title>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  </head>
+
+  <body style="">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <a class="navbar-brand" rel="home" href="#" title="Buy Sell Rent Everyting">
+        <img style="max-width:190px; margin-top: -7px;"
+             src="vlogo.png">
+    </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="inscription.php">Inscription</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="connexion.php">Connexion</a>
+      </li>
+     
+     
+    </ul>
+    
+  </div>
+</nav>
+
+	<div class="container" style="margin-top: 30px;">
+<div class="card bg-light">
+<article class="card-body mx-auto" style="max-width: 400px;">
+
+	<h4 class="card-title mt-2 text-center"> Faites votre versement </h4>
+	<p class="divider-text">
+    </p>
+	<form method="POST" action="">
+
+
+  <div class="form-group input-group">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+		 </div>
+        <input name="matricule" class="form-control" placeholder="matricule" type="text">
+    </div> <!-- form-group// --> 
+
+	<div class="form-group input-group">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+		 </div>
+        <input name="date_op" class="form-control" placeholder="01/01/2000" type="text">
+    </div> <!-- form-group// -->
+
+   
+
+    <div class="form-group input-group">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+		 </div>
+        <input name="montant_op" class="form-control" placeholder="Dépot" type="text">
+    </div> <!-- form-group// -->
+
+    <select class="custom-select" name="typeversement">
+  
+  <option value="cheque">Chèque</option>
+  <option value="espece">Espèce</option>
+  
+   </select> <br> <br>
+
+    <div class="form-group input-group">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+		 </div>
+        <input name="visa" class="form-control" placeholder="Signature" type="text">
+    </div> <!-- form-group// -->
+
+
+  
+    <?php  echo "<script>alert(\" Le montant qu'il reste à payer est :.$rap\")</script>";?>                                   
+    <div class="form-group">
+        <button  type="submit" class="btn btn-primary btn-block"  name="forminscription">  VALIDER </button>
+    </div> <!-- form-group// -->                                                                       
+</form>
+</article>
+</div> <!-- card.// -->
+
+</div> 
+	
+
+  </body>
+  <script src="bootstrap.js"></script>
+  <script src="bootstrap.min.js"></script>
+  </html>

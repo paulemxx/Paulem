@@ -1,0 +1,11 @@
+	A faire 
+
+- integrer le code php de l'image que tu m'a envoye sur wha dans mon code 
+-faire en sorte que si l'etudiant clique sur un niveau ex:licence 1 il est automatiquement sa scolarite et que celle ci lui serve à pouvoir calculer le reste a payer dans la partie versement et que celui rentre dans la base de donnee
+-faire en sorte que s'il coche redoublant le calcul de sa scolarité soit faite et que dans la partie versement  on use de sa pour pouvoir faire le calcul du reste a payer à a^rtir du montant verse 
+-arranger le design si tu peux genre ajouter arranger comme t u souhate selon ton appreciaition 
+
+
+en gros le truc a ete deja dit en nv  celle de 1mn08s et 00mn46s a 23h32 et 23h33  ce dont on ajoute dessuss est que le montant de la soclarite calculer nous permete de trouver le reste a payer dans al partie versement.php 
+
+merciiiiiiiiii

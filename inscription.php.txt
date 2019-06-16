@@ -1,0 +1,270 @@
+php
+
+$bdd = new PDO(mysqlhost=localhost;dbname=appweb,'root','');
+$bdd-setAttribute(PDOATTR_ERRMODE, PDOERRMODE_EXCEPTION);  Gestion des erreurs.
+
+if(isset($_POST['forminscription'])) {
+   $matricule = htmlspecialchars($_POST['matricule']); 
+   $nom = htmlspecialchars($_POST['nom']);
+   $prenom = htmlspecialchars($_POST['prenom']);
+   $datenaiss = htmlspecialchars($_POST['datenaiss']);
+   $lieunaiss = htmlspecialchars($_POST['lieunaiss']);
+   $sexe = htmlspecialchars($_POST['sexe']);
+   $nationalite = htmlspecialchars($_POST['nationalite']);
+   $niveau =  htmlspecialchars($_POST['niveau']);
+   $mail = htmlspecialchars($_POST['mail']);
+   $mail2 = htmlspecialchars($_POST['mail2']);
+   $mdp = sha1($_POST['mdp']);
+   $mdp2 = sha1($_POST['mdp2']);
+   $tel = htmlspecialchars($_POST['tel']);
+   $correspondant = htmlspecialchars($_POST['correspondant']);
+   $lienphoto = htmlspecialchars($_POST['lienphoto']);
+   $scolarite= htmlspecialchars($_POST['scolarite']);
+   if(!empty($_POST['matricule']) AND !empty($_POST['nom']) AND !empty($_POST['prenom']) AND !empty($_POST['datenaiss']) AND !empty($_POST['lieunaiss']) AND !empty($_POST['sexe']) AND !empty($_POST['nationalite']) AND !empty($_POST['niveau']) AND !empty($_POST['mail']) AND !empty($_POST['mail2'])  AND !empty($_POST['mdp']) AND !empty($_POST['mdp2']) AND !empty($_POST['tel']) AND !empty($_POST['correspondant']) AND !empty($_POST['lienphoto'])) {
+
+      if(!empty($_POST[matricule])) {
+         $matricule = '.$_POST[matricule].'; 
+       } else {
+         $matricule='DEFAULT';
+       }
+   
+      $nomlength = strlen($nom);
+      $prenomlength = strlen($prenom);
+      $scolarite=0;
+       switch($niveau)
+       {
+           caseLicence1
+               $scolarite =750000;
+               break;
+           caseLicence2
+               $scolarite =760000;
+               break;
+           caseLicence3
+               $scolarite =825000;
+               break;
+           case Master1
+               $scolarite =845000;
+               break;
+
+           caseMaster2
+               $scolarite =900000;
+               break;
+           default $scolarite=0;
+       }
+      if(($nomlength = 255 AND $nomlength  5)  ($prenomlength = 255 AND $prenomlength  5)  ) {
+         if($mail == $mail2) { 
+            if(filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+               $reqmail = $bdd-prepare(select  from etudiant where email=);
+               $reqmail-execute(array($mail));
+               $mailexist = $reqmail-rowCount();
+               if($mailexist == 0) {
+                  if($mdp == $mdp2) {
+                     $insertmbr = $bdd-prepare(INSERT INTO etudiant(matricule,nom,prenom,datenaiss,lieunaiss,sexe,nationalite,niveau,email,mdpass,tel,correspondant,lienphoto) VALUES(,,,,,,,,,,,,));
+                     $insertmbr-execute(array($matricule,$nom,$prenom,$datenaiss,$lieunaiss,$sexe,$nationalite,$niveau,$mail,$mdp,$tel,$correspondant,$lienphoto));
+                     $erreur = Votre compte a bien été créé !;
+                  } else {
+                     $erreur = Vos mots de passes ne correspondent pas !;
+                  }
+               } else {
+                  $erreur = Adresse mail déjà utilisée !;
+               }
+            } else {
+               $erreur = Votre adresse mail n'est pas valide !;
+            }
+         } else {
+            $erreur = Vos adresses mail ne correspondent pas !;
+         }
+      } else {
+         $erreur = Votre pseudo  doit dépasser 5 caractères et ne pas dépasser 255 !;
+      }
+   } else {
+      $erreur = Tous les champs doivent être complétés !;
+
+   }
+}
+
+
+
+
+
+
+
+
+
+!DOCTYPE html
+  html lang=fr
+
+  head
+  	meta charset=utf-8
+  	meta http-equiv=X-UA-Compatible content=IE=edge
+  	meta name=viewport content=width=device-width, initial-scale=1
+  	titleForumtitle
+link href=maxcdn.bootstrapcdn.combootstrap4.0.0cssbootstrap.min.css rel=stylesheet id=bootstrap-css
+script src=maxcdn.bootstrapcdn.combootstrap4.0.0jsbootstrap.min.jsscript
+script src=cdnjs.cloudflare.comajaxlibsjquery3.2.1jquery.min.jsscript
+link rel=stylesheet href=httpsuse.fontawesome.comreleasesv5.0.8cssall.css
+
+  head
+
+  body style=
+
+  nav class=navbar navbar-expand-lg navbar-light bg-white
+  a class=navbar-brand rel=home href=# title=Buy Sell Rent Everyting
+        img style=max-width190px; margin-top -7px;
+             src=vlogo.png
+    a
+  button class=navbar-toggler type=button data-toggle=collapse data-target=#navbarText aria-controls=navbarText aria-expanded=false aria-label=Toggle navigation
+    span class=navbar-toggler-iconspan
+  button
+  div class=collapse navbar-collapse id=navbarText
+    ul class=navbar-nav mr-auto
+      li class=nav-item active
+        a class=nav-link href=home.phpHome span class=sr-only(current)spana
+      li
+      li class=nav-item
+        a class=nav-link href=#Inscriptiona
+      li
+      li class=nav-item
+        a class=nav-link href=connexion.phpConnexiona
+      li
+     
+     
+    ul
+    
+  div
+nav
+
+	div class=container style=margin-top 30px;
+div class=card bg-light
+article class=card-body mx-auto style=max-width 400px;
+
+	h4 class=card-title mt-2 text-centerCréez votre compteh4
+	p class=divider-text
+    p
+	form method=POST action=
+
+    div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=matricule class=form-control placeholder=Matricule type=text
+    div !-- form-group --
+
+	div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=nom class=form-control placeholder=Nom type=text
+    div !-- form-group --
+    div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=prenom class=form-control placeholder=Prenom type=text
+    div !-- form-group --
+    div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=datenaiss class=form-control placeholder=01012000 type=text
+    div !-- form-group --
+    div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=lieunaiss class=form-control placeholder=Lieu de naissance type=text
+    div !-- form-group --
+    
+    select class=custom-select name=sexe
+  
+  option value=HommeHommeoption
+  option value=FemmeFemmeoption
+  
+   select br br
+
+   div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=nationalite class=form-control placeholder=Nationalité type=text
+    div !-- form-group --
+  br
+
+        select class=custom-select name=niveau
+
+            option value=Licence1Licence1option
+            option value=Licence2Licence2option
+            option value=Licence3Licence3option
+            option value=Master1Master1option
+            option value=Master2Master2option
+
+        select br br
+
+
+
+        div class=form-group input-group
+    	div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-envelopei span
+		 div
+        input name=mail class=form-control placeholder=Email type=email
+    div !-- form-group --
+       
+    div class=form-group input-group
+    	div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-envelopei span
+		 div
+        input name=mail2 class=form-control placeholder=Confirmez votre email type=email
+    div !-- form-group --
+
+    div class=form-group input-group
+    	div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-locki span
+		div
+        input name=mdp class=form-control placeholder=Mot de passe type=password
+    div !-- form-group --
+    div class=form-group input-group
+    	div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-locki span
+		div
+        input name=mdp2 class=form-control placeholder=Confirmation du mot de passe type=password
+    div !-- form-group --
+
+    div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=tel class=form-control placeholder=Téléphone type=text
+    div !-- form-group --
+
+    div class=form-group input-group
+		div class=input-group-prepend
+		    span class=input-group-text i class=fa fa-useri span
+		 div
+        input name=correspondant class=form-control placeholder=Correspondant type=text
+    div !-- form-group --
+
+    div class=custom-file
+    input type=file class=custom-file-input id=inputGroupFile01 aria-describedby=inputGroupFileAddon01 name=lienphoto
+    label class=custom-file-label for=inputGroupFile01Choisir le lienlabel
+    div br br
+    
+
+
+   
+                                        
+    div class=form-group
+        button  type=submit class=btn btn-primary btn-block  name=forminscription Je m'inscrisbutton
+
+    div !-- form-group --
+
+form
+article
+div !-- card. --
+
+div 
+	
+
+  body
+  script src=bootstrap.jsscript
+  script src=bootstrap.min.jsscript
+  html
